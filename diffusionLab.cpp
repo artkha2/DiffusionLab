@@ -17,6 +17,14 @@ int main() {
     int d_values[NUMBER_OF_NS][M];  // final positions of each trial for every N
     // Each inner array is M final positions, there are are NUMBER_OF_NS inner arrays
     // Each row corresponds to a particular N value, values within a row are trials 1-M
+    // The stored values can be used in the code later, if needed
+
+    // Output the results into a CSV file
+    // CSV makes it easier to import the data into Google Sheets/Excel and graph it
+    
+    ofstream out_file("diffusion_out.csv");  // create new file or overwrite existing one
+    out_file << "Number of Steps (N),Trial Number (M),Final Position (D)\n";  // Write header row
+    //cout << "Number of Steps (N) \t Trial Number (M) \t Final Position (D)\n";  // Uncomment to print to console
 
     for(int n_ind=0; n_ind < NUMBER_OF_NS; n_ind++){  // iterate through different N's
         for(int trial=0; trial<M; trial++){  // Do M trials for every N
@@ -33,21 +41,8 @@ int main() {
                 }
             }
             d_values[n_ind][trial] = current_pos;  // store the final position in 2D array
-        }
-    }
-
-    // Output the results into a CSV file by iterating through 2D array
-    // CSV makes it easier to import the data into Google Sheets/Excel and graph it
-    
-    ofstream out_file("diffusion_out.csv");  // create new file or overwrite existing one
-    out_file << "Number of Steps (N),Trial Number (M),Final Position (D)\n";  // Write header row
-    
-    //cout << "Number of Steps (N) \t Trial Number (M) \t Final Position (D)\n";  // Uncomment to print to console
-
-    for(int n_ind=0; n_ind < NUMBER_OF_NS; n_ind++){  // iterate through different N's
-        for(int trial=1; trial<=M; trial++){  // Do M trials for every N
-            //cout << "\t" << step_numbers[n_ind] << "\t\t\t" << trial << "\t\t\t" << d_values[n_ind][trial] << "\n"; // Uncomment to print to console
-            out_file << step_numbers[n_ind] << "," << trial << "," << d_values[n_ind][trial] << "\n";
+            //cout << "\t" << step_numbers[n_ind] << "\t\t\t" << trial+1 << "\t\t\t" << current_pos << "\n"; // Uncomment to print to console
+            out_file << step_numbers[n_ind] << "," << trial+1 << "," << current_pos << "\n";
         }
     }
 
